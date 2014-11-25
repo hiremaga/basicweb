@@ -6,6 +6,7 @@ import (
 
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
+	"github.com/hiremaga/basicweb/books"
 	"github.com/russross/blackfriday"
 )
 
@@ -17,6 +18,7 @@ func main() {
 
 	r := mux.NewRouter().StrictSlash(false)
 	r.HandleFunc("/markdown", GenerateMarkdown)
+	r.HandleFunc("/books", books.Show)
 
 	n := negroni.Classic()
 	n.UseHandler(r)
