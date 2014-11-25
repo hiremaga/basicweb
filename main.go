@@ -19,6 +19,7 @@ func main() {
 	r := mux.NewRouter().StrictSlash(false)
 	r.HandleFunc("/markdown", GenerateMarkdown)
 	r.HandleFunc("/books", books.Show)
+	r.HandleFunc("/books.html", books.ShowHtml)
 
 	n := negroni.Classic()
 	n.UseHandler(r)
