@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 	"github.com/russross/blackfriday"
 )
@@ -16,9 +17,10 @@ func main() {
 
 	r := mux.NewRouter().StrictSlash(false)
 	r.HandleFunc("/markdown", GenerateMarkdown)
-	r.PathPrefix("/").Handler(http.FileServer((http.Dir("public"))))
 
-	http.ListenAndServe(":"+port, r)
+	n := negroni.Classic()
+	n.UseHandler(r)
+	n.Run(":" + port)
 }
 
 func GenerateMarkdown(rw http.ResponseWriter, r *http.Request) {
