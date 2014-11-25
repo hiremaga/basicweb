@@ -1,6 +1,7 @@
 all: build
 
 build:
+	GOOS=linux go build
 	docker build -t hiremaga/basicweb --rm=true .
 
 run:
