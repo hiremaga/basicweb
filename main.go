@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/GeertJohan/go.rice"
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 	"github.com/hiremaga/basicweb/books"
@@ -22,13 +21,7 @@ func main() {
 	r.HandleFunc("/books", books.Show)
 	r.HandleFunc("/books.html", books.ShowHtml)
 
-	public := rice.MustFindBox("public").HTTPBox()
-
-	n := negroni.New(
-		negroni.NewRecovery(),
-		negroni.NewLogger(),
-		negroni.NewStatic(public),
-	)
+	n := negroni.Classic()
 	n.UseHandler(r)
 	n.Run(":" + port)
 }
